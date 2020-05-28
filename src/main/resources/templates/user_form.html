@@ -9,7 +9,7 @@
 </head>
 <body>
 <div layout:fragment="content">
-    <form method="post" th:action="@{${user.id != null ? '/user-edit/' + user.id : '/user-create'}}">
+    <form method="post" th:action="@{'/users' + ${user.id != null ? '/edit/' + user.id : '/create'}}">
         <div class="form-group">
             <label for="email">Email</label>
             <input type="email"
