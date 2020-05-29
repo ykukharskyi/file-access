@@ -41,6 +41,12 @@ public class UserGroupController {
         return "user_group_form";
     }
 
+    @GetMapping("/delete/{id}")
+    public String deleteUserGroup(@PathVariable Long id) {
+        userGroupService.delete(id);
+        return "redirect:/user-groups";
+    }
+
     @PostMapping("/create")
     public String createUserGroup(UserGroup userGroup) {
         userGroupService.create(userGroup);
