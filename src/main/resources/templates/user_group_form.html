@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en"
+      layout:decorate="~{layouts/default}"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>User Form</title>
+</head>
+<body>
+<div layout:fragment="content">
+    <form method="post" th:action="@{'/user-groups' + ${userGroup.id != null ? '/edit/' + userGroup.id : '/create'}}">
+        <div class="form-group">
+            <label for="title">Title</label>
+            <input type="text"
+                   class="form-control"
+                   id="title"
+                   name="title"
+                   placeholder="Enter user group title"
+                   th:value="${userGroup.title}">
+        </div>
+        <div class="form-group">
+            <label for="users">Select users</label>
+            <select id="users" name="users" class="selectpicker form-control" multiple data-live-search="true">
+                <option th:each="user : ${users}"
+                        th:text="${user.id + ' ' + user.firstName + ' ' + user.lastName + ' (' + user.email + ')'}"
+                        th:value="${user.id}"
+                        th:selected="${#lists.contains(userGroup.users, user)}"></option>
+            </select>
+        </div>
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+</div>
+<script layout:fragment="script">
+    $('select').selectpicker();
+</script>
+</body>
+</html>

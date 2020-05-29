@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en"
+      layout:decorate="~{layouts/default}"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Users List</title>
+</head>
+<body>
+<div layout:fragment="newItem">
+    <a class="btn btn-outline-light" th:href="@{/user-groups/create}">New User Group</a>
+</div>
+<div layout:fragment="content">
+    <table class="table table-striped table-hover">
+        <thead>
+        <tr>
+            <th scope="col">#</th>
+            <th scope="col">Title</th>
+            <th scope="col"></th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr class="table-controls-row" th:each="userGroup: ${userGroups}">
+            <th scope="row" th:text="${userGroup.id}"></th>
+            <td th:text="${userGroup.title}"></td>
+            <td class="table-controls-cell">
+                <div class="table-controls-wrapper">
+                    <a class="btn btn-primary btn-sm" th:href="@{'/user-groups/edit/' + ${userGroup.id}}">Edit</a>
+                    <a class="btn btn-danger btn-sm" th:href="@{'/user-groups/delete/' + ${userGroup.id}}">Delete</a>
+                </div>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+</body>
+</html>
