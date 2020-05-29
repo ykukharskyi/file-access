@@ -10,6 +10,6 @@ public class HomeController {
 
     @GetMapping
     public String redirectToUsers() {
-        return "redirect:/users";
+        return "redirect:/file-accesses";
     }
 }

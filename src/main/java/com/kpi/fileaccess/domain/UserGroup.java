@@ -13,7 +13,7 @@ public class UserGroup {
 
     private String title;
 
-    @ManyToMany(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
             name = "user_group_user",
             joinColumns = @JoinColumn(name = "user_group_id"),

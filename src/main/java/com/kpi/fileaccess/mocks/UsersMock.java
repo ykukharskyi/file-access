@@ -21,7 +21,8 @@ public class UsersMock {
 
     @PostConstruct
     public void setUpUsersMocks() {
-        userGroupService.create(createAdminUserGroup(createAdminUser()));
+        User user = userService.create(createAdminUser());
+        userGroupService.create(createAdminUserGroup(user));
     }
 
     private User createAdminUser() {

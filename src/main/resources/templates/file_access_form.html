@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en"
+      layout:decorate="~{layouts/default}"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>File Form</title>
+</head>
+<body>
+<div layout:fragment="content">
+    <form method="post" th:action="@{'/file-accesses' + ${fileAccess.id != null ? '/edit/' + fileAccess.id : '/create'}}">
+        <div class="form-group">
+            <label for="title">Title</label>
+            <input type="text"
+                   class="form-control"
+                   id="title"
+                   name="title"
+                   placeholder="Enter file title"
+                   th:value="${fileAccess.title}">
+        </div>
+        <div class="form-group">
+            <label for="userGroup">User Group</label>
+            <select class="form-control" id="userGroup" name="userGroup">
+                <option>--</option>
+                <option th:each="userGroup: ${userGroups}"
+                        th:text="${userGroup.title}"
+                        th:value="${userGroup.id}"
+                        th:selected="${
+                            fileAccess.userGroup != null &&
+                            userGroup.id.equals(fileAccess.userGroup.id)
+                        }"></option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="fileAccessRule">File Access Rule</label>
+            <select class="form-control" id="fileAccessRule" name="fileAccessRule">
+                <option>--</option>
+                <option th:each="fileAccessRule: ${fileAccessRules}"
+                        th:text="${fileAccessRule.title}"
+                        th:value="${fileAccessRule.id}"
+                        th:selected="${
+                            fileAccess.fileAccessRule != null &&
+                            fileAccessRule.id.equals(fileAccess.fileAccessRule.id)
+                        }"></option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="file">File</label>
+            <select class="form-control" id="file" name="file">
+                <option>--</option>
+                <option th:each="file: ${files}"
+                        th:text="${file.title}"
+                        th:value="${file.id}"
+                        th:selected="${
+                            fileAccess.file != null &&
+                            file.id.equals(fileAccess.file.id)
+                        }"></option>
+            </select>
+        </div>
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+</div>
+</body>
+</html>

@@ -26,13 +26,13 @@ public class FileController {
     @GetMapping("/create")
     public String renderNewFileForm(Model model) {
         model.addAttribute("file", new File());
-        return "files_form";
+        return "file_form";
     }
 
     @GetMapping("/edit/{id}")
     public String renderEditFileForm(@PathVariable Long id, Model model) {
         model.addAttribute("file", fileService.read(id));
-        return "files_form";
+        return "file_form";
     }
 
     @GetMapping("/delete/{id}")
