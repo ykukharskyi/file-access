@@ -34,7 +34,8 @@
             <td class="table-controls-cell">
                 <div class="table-controls-wrapper">
                     <a class="btn btn-primary btn-sm" th:href="@{'/file-access-rules/edit/' + ${fileAccessRule.id}}">Edit</a>
-                    <a class="btn btn-danger btn-sm" th:href="@{'/file-access-rules/delete/' + ${fileAccessRule.id}}">Delete</a>
+                    <a th:class="${'btn btn-danger btn-sm' + (#lists.isEmpty(fileAccessRule.fileAccesses) ? '' : ' disabled')}"
+                       th:href="@{'/file-access-rules/delete/' + ${fileAccessRule.id}}">Delete</a>
                 </div>
             </td>
         </tr>

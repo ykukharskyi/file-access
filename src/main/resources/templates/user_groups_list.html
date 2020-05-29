@@ -27,7 +27,8 @@
             <td class="table-controls-cell">
                 <div class="table-controls-wrapper">
                     <a class="btn btn-primary btn-sm" th:href="@{'/user-groups/edit/' + ${userGroup.id}}">Edit</a>
-                    <a class="btn btn-danger btn-sm" th:href="@{'/user-groups/delete/' + ${userGroup.id}}">Delete</a>
+                    <a th:class="${'btn btn-danger btn-sm' + (#lists.isEmpty(userGroup.fileAccesses) ? '' : ' disabled')}"
+                       th:href="@{'/user-groups/delete/' + ${userGroup.id}}">Delete</a>
                 </div>
             </td>
         </tr>
