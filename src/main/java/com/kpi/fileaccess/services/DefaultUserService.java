@@ -3,15 +3,17 @@ package com.kpi.fileaccess.services;
 import com.kpi.fileaccess.domain.User;
 import com.kpi.fileaccess.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
-import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
 @Service
 public class DefaultUserService implements UserService {
+    private static final String INVALID_USERNAME_MESSAGE = "Invalid username";
 
     @Autowired
     private UserRepository userRepository;
@@ -51,5 +53,12 @@ public class DefaultUserService implements UserService {
         List<User> result = new ArrayList<>();
         userRepository.findAll().forEach(result::add);
         return result;
+    }
+
+
+    @Override
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        return userRepository.findByEmail(username)
+                .orElseThrow(() -> new UsernameNotFoundException(INVALID_USERNAME_MESSAGE));
     }
 }
