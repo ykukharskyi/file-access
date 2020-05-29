@@ -21,6 +21,9 @@ public class UserGroup {
     )
     private List<User> users = new ArrayList<>();
 
+    @OneToMany(mappedBy = "userGroup")
+    private List<FileAccess> fileAccesses = new ArrayList<>();
+
     public Long getId() {
         return id;
     }
@@ -43,5 +46,13 @@ public class UserGroup {
 
     public void setUsers(List<User> users) {
         this.users = users;
+    }
+
+    public List<FileAccess> getFileAccesses() {
+        return fileAccesses;
+    }
+
+    public void setFileAccesses(List<FileAccess> fileAccesses) {
+        this.fileAccesses = fileAccesses;
     }
 }

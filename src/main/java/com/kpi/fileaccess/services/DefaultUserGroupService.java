@@ -23,6 +23,7 @@ public class DefaultUserGroupService implements UserGroupService {
 
     @Override
     public UserGroup create(UserGroup userGroup) {
+        populateUsers(userGroup);
         return userGroupRepository.save(userGroup);
     }
 
@@ -31,12 +32,7 @@ public class DefaultUserGroupService implements UserGroupService {
         Optional<UserGroup> existingUserGroupOptional = userGroupRepository.findById(id);
         existingUserGroupOptional.ifPresent(userGroup -> {
             userGroup.setTitle(newUserGroup.getTitle());
-            List<Long> userIds = newUserGroup.getUsers().stream()
-                    .map(User::getId)
-                    .collect(Collectors.toList());
-            List<User> users = new ArrayList<>();
-            userRepository.findAllById(userIds).forEach(users::add);
-            userGroup.setUsers(users);
+            populateUsers(newUserGroup, userGroup);
             userGroupRepository.save(userGroup);
         });
         return existingUserGroupOptional.orElse(null);
@@ -59,5 +55,18 @@ public class DefaultUserGroupService implements UserGroupService {
         List<UserGroup> result = new ArrayList<>();
         userGroupRepository.findAll().forEach(result::add);
         return result;
+    }
+
+    private void populateUsers(UserGroup userGroup) {
+        populateUsers(userGroup, userGroup);
+    }
+
+    private void populateUsers(UserGroup source, UserGroup target) {
+        List<Long> userIds = source.getUsers().stream()
+                .map(User::getId)
+                .collect(Collectors.toList());
+        List<User> users = new ArrayList<>();
+        userRepository.findAllById(userIds).forEach(users::add);
+        target.setUsers(users);
     }
 }

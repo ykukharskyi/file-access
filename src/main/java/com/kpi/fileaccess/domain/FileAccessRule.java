@@ -1,9 +1,8 @@
 package com.kpi.fileaccess.domain;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 public class FileAccessRule {
@@ -21,6 +20,9 @@ public class FileAccessRule {
     private boolean update;
 
     private boolean delete;
+
+    @OneToMany(mappedBy = "fileAccessRule")
+    private List<FileAccess> fileAccesses = new ArrayList<>();
 
     public Long getId() {
         return id;
@@ -68,5 +70,13 @@ public class FileAccessRule {
 
     public void setDelete(boolean delete) {
         this.delete = delete;
+    }
+
+    public List<FileAccess> getFileAccesses() {
+        return fileAccesses;
+    }
+
+    public void setFileAccesses(List<FileAccess> fileAccesses) {
+        this.fileAccesses = fileAccesses;
     }
 }
