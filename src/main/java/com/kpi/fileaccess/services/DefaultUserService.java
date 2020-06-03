@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 @Service
 public class DefaultUserService implements UserService {
@@ -31,6 +32,8 @@ public class DefaultUserService implements UserService {
             user.setFirstName(newUser.getFirstName());
             user.setLastName(newUser.getLastName());
             user.setPassword(newUser.getPassword());
+            user.setToken(newUser.getToken());
+            user.setActivated(newUser.isActivated());
             userRepository.save(user);
         });
         return existingUserOptional.orElse(null);
@@ -46,6 +49,29 @@ public class DefaultUserService implements UserService {
     @Override
     public User read(Long id) {
         return userRepository.findById(id).orElse(null);
+    }
+
+    @Override
+    public User readByEmail(String email) {
+        return userRepository.findByEmail(email).orElse(null);
+    }
+
+    @Override
+    public User generateToken(User user) {
+        String token = UUID.randomUUID().toString();
+        System.out.println("Generated token: " + token);
+        user.setToken(token);
+        return edit(user.getId(), user);
+    }
+
+    @Override
+    public User activateToken(String token, User currentUser) {
+        User user = read(currentUser.getId());
+        if (token.equals(user.getToken())) {
+            user.setToken(null);
+            user.setActivated(true);
+        }
+        return edit(user.getId(), user);
     }
 
     @Override

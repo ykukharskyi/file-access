@@ -10,5 +10,8 @@ public interface UserService extends UserDetailsService {
     User edit(Long id, User user);
     User delete(Long id);
     User read(Long id);
+    User readByEmail(String email);
+    User generateToken(User user);
+    User activateToken(String token, User user);
     List<User> readAll();
 }

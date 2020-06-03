@@ -23,6 +23,10 @@ public class User implements UserDetails {
 
     private String password;
 
+    private boolean activated;
+
+    private String token;
+
     @ManyToMany(mappedBy = "users")
     private List<UserGroup> userGroup = new ArrayList<>();
 
@@ -32,6 +36,22 @@ public class User implements UserDetails {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public boolean isActivated() {
+        return activated;
+    }
+
+    public void setActivated(boolean activated) {
+        this.activated = activated;
+    }
+
+    public String getToken() {
+        return token;
+    }
+
+    public void setToken(String token) {
+        this.token = token;
     }
 
     public String getEmail() {
